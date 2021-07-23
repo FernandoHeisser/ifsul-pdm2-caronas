@@ -5,4 +5,8 @@
     <string name="password">Senha</string>
     <string name="login">Entrar</string>
     <string name="register">Cadastre-se</string>
+    <string name="register2">Cadastrar</string>
+    <string name="phone">Telefone</string>
+    <string name="name">Nome</string>
+    <string name="profile_image">Profile Image</string>
 </resources>
