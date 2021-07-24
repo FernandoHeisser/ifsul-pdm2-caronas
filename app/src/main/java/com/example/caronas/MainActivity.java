@@ -2,9 +2,9 @@ package com.example.caronas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,16 +20,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        TextView textViewRegister = findViewById(R.id.textViewRegister);
-        textViewRegister.setOnClickListener(view -> {
-            YoYo.with(Techniques.Flash)
-                    .duration(700)
-                    .repeat(1)
-                    .playOn(findViewById(R.id.textViewRegister));
+    public void openRegister(View view) {
+        YoYo.with(Techniques.Flash)
+                .duration(700)
+                .repeat(1)
+                .playOn(findViewById(R.id.textViewRegister));
 
-            Intent myIntent = new Intent(view.getContext(), RegisterActivity.class);
-            startActivity(myIntent);
-        });
+        Intent myIntent = new Intent(view.getContext(), RegisterActivity.class);
+        startActivity(myIntent);
     }
 }
