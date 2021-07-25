@@ -14,79 +14,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.caronas.models.User;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private final OkHttpClient client = new OkHttpClient();
+    private final Service service = new Service();
     private List<User> users = new ArrayList<>();
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getUsers();
+        service.executeGetUsers();
+        users = service.getUsers();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         imageButton = findViewById(R.id.imageButton);
-    }
-
-    public void createUser(User user) throws Exception {
-        String postBody = new Gson().toJson(user);
-
-        Request request = new Request.Builder()
-                .url("http://192.168.1.3:3333/api/user")
-                .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-            System.out.println(Objects.requireNonNull(response.body()).string());
-        }
-    }
-
-    public void getUsers() {
-        Request request = new Request.Builder()
-                .url("http://192.168.1.3:3333/api/users")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response);
-
-                    Type listType = new TypeToken<List<User>>() {
-                    }.getType();
-                    users = new Gson().fromJson(Objects.requireNonNull(responseBody).string(), listType);
-                }
-            }
-        });
     }
 
     public void takeProfileImage(View view) {
@@ -106,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void handleRegister(View view) throws Exception {
+    public void handleRegister(View view) {
         EditText editTextName = findViewById(R.id.editTextName);
         EditText editTextEmailRegister = findViewById(R.id.editTextEmailRegister);
         EditText editTextPasswordRegister = findViewById(R.id.editTextPasswordRegister);
@@ -158,12 +103,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         Thread thread = new Thread(() -> {
             try {
-                createUser(newUser);
+                service.createUser(newUser);
             } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(view.getContext(), "Erro no cadastro, tente novamente", Toast.LENGTH_LONG).show();
             }
         });
         thread.start();
+
+        Toast.makeText(view.getContext(), "Cadastro realizado!", Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
