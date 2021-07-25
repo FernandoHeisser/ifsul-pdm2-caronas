@@ -13,13 +13,11 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.caronas.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private final Service service = new Service();
-    private List<User> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editTextEmail = findViewById(R.id.editTextEmail);
         EditText editTextPassword = findViewById(R.id.editTextPassword);
-        users = service.getUsers();
+        List<User> users = service.getUsers();
 
         if (TextUtils.isEmpty(editTextEmail.getText())) {
             editTextEmail.setError("Digite o seu email!");
@@ -67,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (userExists && currentUser != null) {
+        if (userExists) {
             if (currentUser.getEmail().equals(email) && currentUser.getPassword().equals(password)) {
-                Toast.makeText(view.getContext(), "Deu tudo certo!", Toast.LENGTH_LONG).show();
+                service.setCurrentUser(currentUser);
+                Intent myIntent = new Intent(view.getContext(), HomeActivity.class);
+                startActivity(myIntent);
             } else {
                 Toast.makeText(view.getContext(), "Senha incorreta!", Toast.LENGTH_LONG).show();
                 YoYo.with(Techniques.Shake)

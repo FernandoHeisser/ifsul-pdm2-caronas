@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_rides">
+
+    <fragment
+        android:id="@+id/navigation_rides"
+        android:name="com.example.caronas.ui.rides.MyRidesFragment"
+        android:label="@string/title_rides"
+        tools:layout="@layout/fragment_rides" />
+
+    <fragment
+        android:id="@+id/navigation_offers"
+        android:name="com.example.caronas.ui.offers.OffersFragment"
+        android:label="@string/title_offers"
+        tools:layout="@layout/fragment_offers" />
+
+    <fragment
+        android:id="@+id/navigation_requests"
+        android:name="com.example.caronas.ui.requests.RequestsFragment"
+        android:label="@string/title_requests"
+        tools:layout="@layout/fragment_requests" />
+</navigation>

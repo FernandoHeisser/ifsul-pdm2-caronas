@@ -9,4 +9,8 @@
     <string name="phone">Telefone</string>
     <string name="name">Nome</string>
     <string name="profile_image">Profile Image</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_rides">Minhas caronas</string>
+    <string name="title_offers">Ofertas</string>
+    <string name="title_requests">Pedidos</string>
 </resources>
