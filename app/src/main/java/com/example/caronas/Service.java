@@ -26,9 +26,18 @@ public class Service {
     private final OkHttpClient client = new OkHttpClient();
 
     private List<User> users = new ArrayList<>();
+    private User currentUser;
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     public void createUser(User user) throws Exception {

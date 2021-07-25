@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
 
         if (users != null && !users.isEmpty()) {
-            System.out.println(users);
             for (User user : users) {
                 if (user.getEmail().equals(email)) {
                     userExists = true;
