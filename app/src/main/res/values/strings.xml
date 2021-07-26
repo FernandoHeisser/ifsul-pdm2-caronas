@@ -13,4 +13,12 @@
     <string name="title_rides">Minhas caronas</string>
     <string name="title_offers">Ofertas</string>
     <string name="title_requests">Pedidos</string>
+    <string name="from">De:</string>
+    <string name="to">Para:</string>
+    <string name="to_time">às</string>
+    <string name="call">Ligar</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="vacancies">Vagas:</string>
+    <string name="add_vacancy">+1 Vaga</string>
+    <string name="remove_vacancy">-1 Vaga</string>
 </resources>
