@@ -8,21 +8,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.caronas.databinding.FragmentRidesBinding;
+import com.example.caronas.R;
 
 public class MyRidesFragment extends Fragment {
 
-    private FragmentRidesBinding binding;
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentRidesBinding.inflate(inflater, container, false);
+        View view = inflater.inflate(R.layout.fragment_rides, container, false);
 
-        return binding.getRoot();
+        return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 }
