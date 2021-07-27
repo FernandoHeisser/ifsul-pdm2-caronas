@@ -44,7 +44,7 @@ public class Service {
         String postBody = new Gson().toJson(user);
 
         Request request = new Request.Builder()
-                .url("http://192.168.1.3:3333/api/user")
+                .url(String.format("http://%s/api/user", Constants.localhost))
                 .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                 .build();
 
@@ -57,7 +57,7 @@ public class Service {
 
     public void executeGetUsers() {
         Request request = new Request.Builder()
-                .url("http://192.168.1.3:3333/api/users")
+                .url(String.format("http://%s:3333/api/users", Constants.localhost))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {

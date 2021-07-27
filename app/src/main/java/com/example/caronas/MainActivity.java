@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
             }
+        } else {
+            Toast.makeText(view.getContext(), "Problema de conexão, tente mais tarde", Toast.LENGTH_LONG).show();
         }
 
         if (userExists) {
