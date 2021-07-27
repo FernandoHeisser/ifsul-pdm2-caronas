@@ -15,7 +15,7 @@ public class Ride {
     private String to_street;
     private Date start_date;
     private Date end_date;
-    private boolean canceled;
+    private Long canceled;
 
     public String getPhone() {
         return phone;
@@ -97,11 +97,11 @@ public class Ride {
         this.end_date = end_date;
     }
 
-    public boolean isCanceled() {
+    public Long isCanceled() {
         return canceled;
     }
 
-    public void setCanceled(boolean canceled) {
+    public void setCanceled(Long canceled) {
         this.canceled = canceled;
     }
 

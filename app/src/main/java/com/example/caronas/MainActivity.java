@@ -1,6 +1,7 @@
 package com.example.caronas;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -69,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (userExists) {
             if (currentUser.getEmail().equals(email) && currentUser.getPassword().equals(password)) {
-                service.setCurrentUser(currentUser);
+
+                SharedPreferences.Editor editor = getSharedPreferences("pref", MODE_PRIVATE).edit();
+                editor.putLong("user_id", currentUser.getId());
+                editor.apply();
+
                 Intent myIntent = new Intent(view.getContext(), HomeActivity.class);
                 startActivity(myIntent);
             } else {
