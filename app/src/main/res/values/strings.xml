@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Caronas</string>
-    <string name="carpool">Caronas</string>
+    <string name="ride">Caronas</string>
     <string name="email">Email</string>
     <string name="password">Senha</string>
     <string name="login">Entrar</string>

@@ -152,7 +152,8 @@
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:text=""
-                    app:icon="@android:drawable/star_off" />
+                    app:icon="@android:drawable/star_off"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/buttonOfferCall"
@@ -160,7 +161,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:text="@string/call" />
+                    android:text="@string/call"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/buttonOfferWhatsapp"
@@ -170,7 +172,8 @@
                     android:layout_weight="1"
                     android:text="@string/whatsapp"
                     app:backgroundTint="#009688"
-                    app:rippleColor="#FFFFFF" />
+                    app:rippleColor="#FFFFFF"
+                    tools:ignore="ButtonStyle" />
 
             </LinearLayout>
         </LinearLayout>

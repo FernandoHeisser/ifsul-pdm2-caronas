@@ -8,10 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
+import com.example.caronas.models.Ride;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
+
+    private final List<Ride> myRides;
+
+    public MyRidesAdapter(List<Ride> myRides) {
+        this.myRides = myRides;
+    }
 
     @Override
     public int getItemViewType(final int position) {
@@ -28,11 +37,11 @@ public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyRidesViewHolder holder, int position) {
-        holder.setText("Test my rides");
+        holder.setMyRide(this.myRides.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return myRides.size();
     }
 }

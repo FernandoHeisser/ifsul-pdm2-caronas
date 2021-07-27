@@ -137,21 +137,23 @@
                 android:padding="8dp">
 
                 <Button
-                    android:id="@+id/buttonMyRideCall"
+                    android:id="@+id/buttonMyRideAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:text="@string/add_vacancy" />
+                    android:text="@string/add_vacancy"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/buttonMyRideRemove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:text="@string/remove_vacancy"
-                    app:rippleColor="#FFFFFF" />
+                    app:rippleColor="#FFFFFF"
+                    tools:ignore="ButtonStyle" />
 
             </LinearLayout>
         </LinearLayout>

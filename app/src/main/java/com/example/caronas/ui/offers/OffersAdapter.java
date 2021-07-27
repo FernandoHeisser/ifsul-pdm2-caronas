@@ -8,10 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
+import com.example.caronas.models.Offer;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
+
+    private final List<Offer> offers;
+
+    public OffersAdapter(List<Offer> offers) {
+        this.offers = offers;
+    }
 
     @Override
     public int getItemViewType(final int position) {
@@ -28,11 +37,11 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull OffersViewHolder holder, int position) {
-        holder.setText("Test offers");
+        holder.setOffer(this.offers.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return offers.size();
     }
 }

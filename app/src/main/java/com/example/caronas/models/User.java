@@ -3,9 +3,9 @@ package com.example.caronas.models;
 public class User {
 
     private Long id;
-    private String email;
-    private String name;
-    private String password;
+    private final String email;
+    private final String name;
+    private final String password;
 
     public User(String name, String email, String password) {
         this.name = name;

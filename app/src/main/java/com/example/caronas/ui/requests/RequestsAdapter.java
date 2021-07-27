@@ -8,10 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
+import com.example.caronas.models.Request;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolder> {
+
+    private final List<Request> requests;
+
+    public RequestsAdapter(List<Request> requests) {
+        this.requests = requests;
+    }
 
     @Override
     public int getItemViewType(final int position) {
@@ -28,11 +37,11 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RequestsViewHolder holder, int position) {
-        holder.setText("Test requests");
+        holder.setRequest(this.requests.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return requests.size();
     }
 }
