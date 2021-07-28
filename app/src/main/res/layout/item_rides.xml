@@ -18,6 +18,14 @@
             android:padding="8dp"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textViewCardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/purple_700"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -37,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:text="Charqueadas, Centro, Rua Patricio Ferreira"
                     android:textSize="15sp"
                     tools:ignore="NestedWeights" />
             </LinearLayout>
@@ -62,7 +69,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:text="São Jerônimo, Acacia, Rua das Flores"
                     android:textSize="15sp"
                     tools:ignore="NestedWeights" />
             </LinearLayout>
@@ -79,7 +85,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:text="23/08/2021"
                     android:textStyle="bold"
                     tools:ignore="NestedWeights" />
 
@@ -88,7 +93,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="19:15"
                     android:textStyle="bold" />
 
                 <TextView
@@ -104,7 +108,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="19:25"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -115,18 +118,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/textViewMyRideVacanciesLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Vagas:" />
+                    android:text="@string/vacancies" />
 
                 <TextView
                     android:id="@+id/textViewMyRideVacancies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="3" />
+                    android:padding="8dp"/>
 
             </LinearLayout>
 
@@ -157,7 +159,7 @@
 
                 <Button
                     android:id="@+id/buttonMyRideCancel"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_weight="1"

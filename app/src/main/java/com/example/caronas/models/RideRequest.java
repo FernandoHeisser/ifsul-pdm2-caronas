@@ -1,5 +1,5 @@
 package com.example.caronas.models;
 
-public class Request extends Ride {
+public class RideRequest extends Ride {
 
 }

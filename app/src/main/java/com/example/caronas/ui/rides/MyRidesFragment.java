@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.caronas.HomeActivity;
 import com.example.caronas.R;
 import com.example.caronas.models.Offer;
-import com.example.caronas.models.Request;
 import com.example.caronas.models.Ride;
+import com.example.caronas.models.RideRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +25,12 @@ public class MyRidesFragment extends Fragment {
         HomeActivity homeActivity = (HomeActivity) getActivity();
         assert homeActivity != null;
         List<Offer> myOffers = homeActivity.getService().getMyOffers();
-        List<Request> myRequests = homeActivity.getService().getMyRequests();
+        List<RideRequest> myRideRequests = homeActivity.getService().getMyRequests();
 
         List<Ride> myRides = new ArrayList<>();
 
         myRides.addAll(myOffers);
-        myRides.addAll(myRequests);
+        myRides.addAll(myRideRequests);
 
         View view = inflater.inflate(R.layout.fragment_rides, container, false);
 

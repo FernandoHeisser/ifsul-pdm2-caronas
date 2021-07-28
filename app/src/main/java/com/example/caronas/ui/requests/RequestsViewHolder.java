@@ -1,5 +1,6 @@
 package com.example.caronas.ui.requests;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -8,9 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
-import com.example.caronas.models.Request;
+import com.example.caronas.models.RideRequest;
+import com.example.caronas.models.User;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
 
 public class RequestsViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,18 +41,30 @@ public class RequestsViewHolder extends RecyclerView.ViewHolder {
         buttonRequestWhatsapp = itemView.findViewById(R.id.buttonRequestWhatsapp);
     }
 
-    public void setRequest(Request request) {
-        //String addressFrom = String.format("%s, %s, %s", request.getFrom_city(), request.getFrom_neighborhood(), request.getFrom_street());
-        //String addressTo = String.format("%s, %s, %s", request.getTo_city(), request.getTo_neighborhood(), request.getTo_street());
+    @SuppressLint("SetTextI18n")
+    public void setRequest(RideRequest rideRequest, User user) {
+        String addressFrom = String.format("%s, %s, %s", rideRequest.getFrom_city(), rideRequest.getFrom_neighborhood(), rideRequest.getFrom_street());
+        String addressTo = String.format("%s, %s, %s", rideRequest.getTo_city(), rideRequest.getTo_neighborhood(), rideRequest.getTo_street());
 
-        //String date = request.getStart_date().toString();
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String date = dateFormat.format(rideRequest.getStart_date());
 
-        textViewRequestFrom.setText("Charqueadas, Centro, Rua Patricio Ferreira");
-        textViewRequestTo.setText("São Jerônimo, Acacia, Rua das Flores");
-        textViewRequestDate.setText("23/08/2021");
-        textViewRequestTime1.setText("19:20");
-        textViewRequestTime2.setText("19:30");
-        textViewRequestUser.setText("Fernando Heisser");
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        String time1 = timeFormat.format(rideRequest.getStart_date());
+        String time2 = timeFormat.format(rideRequest.getEnd_date());
+
+        textViewRequestFrom.setText(addressFrom);
+        textViewRequestTo.setText(addressTo);
+        textViewRequestDate.setText(date);
+        textViewRequestTime1.setText(time1);
+        textViewRequestTime2.setText(time2);
+
+        if (user != null) {
+            textViewRequestUser.setText(user.getName());
+        }
+
         buttonRequestFav.setOnClickListener(v -> {
 
         });

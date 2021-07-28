@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
 import com.example.caronas.models.Offer;
+import com.example.caronas.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -17,9 +18,11 @@ import java.util.List;
 public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
 
     private final List<Offer> offers;
+    private final List<User> users;
 
-    public OffersAdapter(List<Offer> offers) {
+    public OffersAdapter(List<Offer> offers, List<User> users) {
         this.offers = offers;
+        this.users = users;
     }
 
     @Override
@@ -37,7 +40,13 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull OffersViewHolder holder, int position) {
-        holder.setOffer(this.offers.get(position));
+        User currentUser = null;
+        for (User user : users) {
+            if (user.getId().equals(offers.get(position).getUser_id())) {
+                currentUser = user;
+            }
+        }
+        holder.setOffer(this.offers.get(position), currentUser);
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.util.Date;
 public class Ride {
 
     private Long id;
-    private String user_id;
+    private Long user_id;
     private String phone;
     private String from_city;
     private String from_neighborhood;
@@ -29,7 +29,7 @@ public class Ride {
         return id;
     }
 
-    public String getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 

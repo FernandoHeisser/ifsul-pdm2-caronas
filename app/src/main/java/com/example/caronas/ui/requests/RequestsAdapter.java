@@ -8,7 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
-import com.example.caronas.models.Request;
+import com.example.caronas.models.RideRequest;
+import com.example.caronas.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,10 +17,12 @@ import java.util.List;
 
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolder> {
 
-    private final List<Request> requests;
+    private final List<RideRequest> rideRequests;
+    private final List<User> users;
 
-    public RequestsAdapter(List<Request> requests) {
-        this.requests = requests;
+    public RequestsAdapter(List<RideRequest> rideRequests, List<User> users) {
+        this.rideRequests = rideRequests;
+        this.users = users;
     }
 
     @Override
@@ -37,11 +40,17 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RequestsViewHolder holder, int position) {
-        holder.setRequest(this.requests.get(position));
+        User currentUser = null;
+        for (User user : users) {
+            if (user.getId().equals(rideRequests.get(position).getUser_id())) {
+                currentUser = user;
+            }
+        }
+        holder.setRequest(this.rideRequests.get(position), currentUser);
     }
 
     @Override
     public int getItemCount() {
-        return requests.size();
+        return rideRequests.size();
     }
 }

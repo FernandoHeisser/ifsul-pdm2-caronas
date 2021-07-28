@@ -1,6 +1,7 @@
 package com.example.caronas;
 
 import com.example.caronas.models.Offer;
+import com.example.caronas.models.RideRequest;
 import com.example.caronas.models.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,9 +30,9 @@ public class Service {
 
     private List<User> users = new ArrayList<>();
     private List<Offer> othersOffers = new ArrayList<>();
-    private List<com.example.caronas.models.Request> othersRequests = new ArrayList<>();
+    private List<RideRequest> othersRideRequests = new ArrayList<>();
     private List<Offer> myOffers = new ArrayList<>();
-    private List<com.example.caronas.models.Request> myRequests = new ArrayList<>();
+    private List<RideRequest> myRideRequests = new ArrayList<>();
 
     private static final String localhost = "192.168.1.7";
 
@@ -43,16 +44,16 @@ public class Service {
         return othersOffers;
     }
 
-    public List<com.example.caronas.models.Request> getOthersRequests() {
-        return othersRequests;
+    public List<RideRequest> getOthersRequests() {
+        return othersRideRequests;
     }
 
     public List<Offer> getMyOffers() {
         return myOffers;
     }
 
-    public List<com.example.caronas.models.Request> getMyRequests() {
-        return myRequests;
+    public List<RideRequest> getMyRequests() {
+        return myRideRequests;
     }
 
     public void createUser(User user) throws Exception {
@@ -137,9 +138,9 @@ public class Service {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
 
-                    Type listType = new TypeToken<List<Request>>() {
+                    Type listType = new TypeToken<List<RideRequest>>() {
                     }.getType();
-                    othersRequests = new Gson().fromJson(Objects.requireNonNull(responseBody).string(), listType);
+                    othersRideRequests = new Gson().fromJson(Objects.requireNonNull(responseBody).string(), listType);
                 }
             }
         });
@@ -187,9 +188,9 @@ public class Service {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
 
-                    Type listType = new TypeToken<List<com.example.caronas.models.Request>>() {
+                    Type listType = new TypeToken<List<RideRequest>>() {
                     }.getType();
-                    myRequests = new Gson().fromJson(Objects.requireNonNull(responseBody).string(), listType);
+                    myRideRequests = new Gson().fromJson(Objects.requireNonNull(responseBody).string(), listType);
                 }
             }
         });

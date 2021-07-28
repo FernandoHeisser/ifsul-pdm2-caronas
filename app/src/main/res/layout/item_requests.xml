@@ -37,7 +37,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:text="Charqueadas, Centro, Rua Patricio Ferreira"
                     android:textSize="15sp"
                     tools:ignore="NestedWeights" />
             </LinearLayout>
@@ -62,7 +61,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:text="São Jerônimo, Acacia, Rua das Flores"
                     android:textSize="15sp"
                     tools:ignore="NestedWeights" />
             </LinearLayout>
@@ -79,7 +77,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:text="23/08/2021"
                     android:textStyle="bold"
                     tools:ignore="NestedWeights" />
 
@@ -88,7 +85,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="19:15"
                     android:textStyle="bold" />
 
                 <TextView
@@ -104,7 +100,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="19:25"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -120,7 +115,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:text="Fernando Heisser"
                     tools:ignore="NestedWeights" />
 
             </LinearLayout>

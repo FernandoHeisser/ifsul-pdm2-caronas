@@ -1,5 +1,6 @@
 package com.example.caronas.ui.offers;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -9,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
 import com.example.caronas.models.Offer;
+import com.example.caronas.models.User;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
 
 public class OffersViewHolder extends RecyclerView.ViewHolder {
 
@@ -39,20 +43,32 @@ public class OffersViewHolder extends RecyclerView.ViewHolder {
         buttonOfferWhatsapp = itemView.findViewById(R.id.buttonOfferWhatsapp);
     }
 
-    public void setOffer(Offer offer) {
+    @SuppressLint("SetTextI18n")
+    public void setOffer(Offer offer, User user) {
 
-        //String addressFrom = String.format("%s, %s, %s", offer.getFrom_city(), offer.getFrom_neighborhood(), offer.getFrom_street());
-        //String addressTo = String.format("%s, %s, %s", offer.getTo_city(), offer.getTo_neighborhood(), offer.getTo_street());
+        String addressFrom = String.format("%s, %s, %s", offer.getFrom_city(), offer.getFrom_neighborhood(), offer.getFrom_street());
+        String addressTo = String.format("%s, %s, %s", offer.getTo_city(), offer.getTo_neighborhood(), offer.getTo_street());
 
-        //String date = offer.getStart_date().toString();
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String date = dateFormat.format(offer.getStart_date());
 
-        textViewOfferFrom.setText("Charqueadas, Centro, Rua Patricio Ferreira");
-        textViewOfferTo.setText("São Jerônimo, Acacia, Rua das Flores");
-        textViewOfferDate.setText("23/08/2021");
-        textViewOfferTime1.setText("19:20");
-        textViewOfferTime2.setText("19:30");
-        textViewOfferUser.setText("Fernando Heisser");
-        textViewOfferVacancies.setText("3");
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        String time1 = timeFormat.format(offer.getStart_date());
+        String time2 = timeFormat.format(offer.getEnd_date());
+
+        textViewOfferFrom.setText(addressFrom);
+        textViewOfferTo.setText(addressTo);
+        textViewOfferDate.setText(date);
+        textViewOfferTime1.setText(time1);
+        textViewOfferTime2.setText(time2);
+        textViewOfferVacancies.setText(offer.getAvailable_vacancies().toString());
+
+        if (user != null) {
+            textViewOfferUser.setText(user.getName());
+        }
+
         buttonOfferFav.setOnClickListener(v -> {
 
         });
