@@ -21,4 +21,5 @@
     <string name="vacancies">Vagas:</string>
     <string name="add_vacancy">+1 Vaga</string>
     <string name="remove_vacancy">-1 Vaga</string>
+    <string name="cancel">Cancelar</string>
 </resources>

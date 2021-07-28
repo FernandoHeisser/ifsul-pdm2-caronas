@@ -29,9 +29,9 @@ public class Service {
 
     private List<User> users = new ArrayList<>();
     private List<Offer> othersOffers = new ArrayList<>();
-    private List<Request> othersRequests = new ArrayList<>();
+    private List<com.example.caronas.models.Request> othersRequests = new ArrayList<>();
     private List<Offer> myOffers = new ArrayList<>();
-    private List<Request> myRequests = new ArrayList<>();
+    private List<com.example.caronas.models.Request> myRequests = new ArrayList<>();
 
     private static final String localhost = "192.168.1.7";
 
@@ -43,7 +43,7 @@ public class Service {
         return othersOffers;
     }
 
-    public List<Request> getOthersRequests() {
+    public List<com.example.caronas.models.Request> getOthersRequests() {
         return othersRequests;
     }
 
@@ -51,7 +51,7 @@ public class Service {
         return myOffers;
     }
 
-    public List<Request> getMyRequests() {
+    public List<com.example.caronas.models.Request> getMyRequests() {
         return myRequests;
     }
 
@@ -187,7 +187,7 @@ public class Service {
                     if (!response.isSuccessful())
                         throw new IOException("Unexpected code " + response);
 
-                    Type listType = new TypeToken<List<Request>>() {
+                    Type listType = new TypeToken<List<com.example.caronas.models.Request>>() {
                     }.getType();
                     myRequests = new Gson().fromJson(Objects.requireNonNull(responseBody).string(), listType);
                 }
