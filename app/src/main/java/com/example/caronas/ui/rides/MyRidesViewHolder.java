@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
+import com.example.caronas.Service;
 import com.example.caronas.models.Offer;
 import com.example.caronas.models.Ride;
 
@@ -17,6 +18,8 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 
 public class MyRidesViewHolder extends RecyclerView.ViewHolder {
+
+    private final Service service = new Service();
 
     private final TextView textViewCardTitle;
     private final TextView textViewMyRideFrom;
@@ -28,7 +31,9 @@ public class MyRidesViewHolder extends RecyclerView.ViewHolder {
     private final TextView textViewMyRideVacanciesLabel;
     private final Button buttonMyRideAdd;
     private final Button buttonMyRideRemove;
-    private final Button buttonMyRideCancel;
+    protected final Button buttonMyRideCancel;
+
+    private Long vacancies;
 
     public MyRidesViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -50,6 +55,7 @@ public class MyRidesViewHolder extends RecyclerView.ViewHolder {
         String addressFrom = String.format("%s, %s, %s", ride.getFrom_city(), ride.getFrom_neighborhood(), ride.getFrom_street());
         String addressTo = String.format("%s, %s, %s", ride.getTo_city(), ride.getTo_neighborhood(), ride.getTo_street());
 
+
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String date = dateFormat.format(ride.getStart_date());
@@ -65,18 +71,33 @@ public class MyRidesViewHolder extends RecyclerView.ViewHolder {
         textViewMyRideTime1.setText(time1);
         textViewMyRideTime2.setText(time2);
 
-        buttonMyRideCancel.setOnClickListener(v -> {
-
-        });
-
         if (ride.getClass().equals(Offer.class)) {
+            this.vacancies = ((Offer) ride).getAvailable_vacancies();
             textViewCardTitle.setText("Oferta");
-            textViewMyRideVacancies.setText(((Offer) ride).getAvailable_vacancies().toString());
+            textViewMyRideVacancies.setText(this.vacancies.toString());
             buttonMyRideAdd.setOnClickListener(v -> {
-
+                Thread thread = new Thread(() -> {
+                    try {
+                        service.addVacancy(ride.getId());
+                        this.vacancies++;
+                        textViewMyRideVacancies.setText(this.vacancies.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                thread.start();
             });
             buttonMyRideRemove.setOnClickListener(v -> {
-
+                Thread thread = new Thread(() -> {
+                    try {
+                        service.removeVacancy(ride.getId());
+                        this.vacancies--;
+                        textViewMyRideVacancies.setText(this.vacancies.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                thread.start();
             });
         } else {
             textViewCardTitle.setText("Pedido");

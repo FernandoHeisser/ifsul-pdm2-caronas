@@ -34,7 +34,7 @@ public class Service {
     private List<Offer> myOffers = new ArrayList<>();
     private List<RideRequest> myRideRequests = new ArrayList<>();
 
-    private static final String localhost = "192.168.1.7";
+    private static final String localhost = "192.168.1.7:3333";
 
     public List<User> getUsers() {
         return users;
@@ -71,9 +71,69 @@ public class Service {
         }
     }
 
+    public void addVacancy(Long offerId) throws Exception {
+        String postBody = "";
+
+        Request request = new Request.Builder()
+                .url(String.format(Locale.getDefault(), "http://%s/api/vacancy/add/%d", localhost, offerId))
+                .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+            System.out.println(Objects.requireNonNull(response.body()).string());
+        }
+    }
+
+    public void removeVacancy(Long offerId) throws Exception {
+        String postBody = "";
+
+        Request request = new Request.Builder()
+                .url(String.format(Locale.getDefault(), "http://%s/api/vacancy/remove/%d", localhost, offerId))
+                .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+            System.out.println(Objects.requireNonNull(response.body()).string());
+        }
+    }
+
+    public void cancelOffer(Long offerId) throws Exception {
+        String postBody = "";
+
+        Request request = new Request.Builder()
+                .url(String.format(Locale.getDefault(), "http://%s/api/cancel/offer/%d", localhost, offerId))
+                .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+            System.out.println(Objects.requireNonNull(response.body()).string());
+        }
+    }
+
+    public void cancelRequest(Long requestId) throws Exception {
+        String postBody = "";
+
+        Request request = new Request.Builder()
+                .url(String.format(Locale.getDefault(), "http://%s/api/cancel/request/%d", localhost, requestId))
+                .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+            System.out.println(Objects.requireNonNull(response.body()).string());
+        }
+    }
+
     public void executeGetUsers() {
         Request request = new Request.Builder()
-                .url(String.format("http://%s:3333/api/users", localhost))
+                .url(String.format("http://%s/api/users", localhost))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -98,7 +158,7 @@ public class Service {
 
     public void executeGetOthersOffers(Long userId) {
         Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s:3333/api/carpool/offers/others/%d", localhost, userId))
+                .url(String.format(Locale.getDefault(), "http://%s/api/carpool/offers/others/%d", localhost, userId))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -123,7 +183,7 @@ public class Service {
 
     public void executeGetOthersRequests(Long userId) {
         Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s:3333/api/carpool/requests/others/%d", localhost, userId))
+                .url(String.format(Locale.getDefault(), "http://%s/api/carpool/requests/others/%d", localhost, userId))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -148,7 +208,7 @@ public class Service {
 
     public void executeGetMyOffers(Long userId) {
         Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s:3333/api/carpool/offers/user/%d", localhost, userId))
+                .url(String.format(Locale.getDefault(), "http://%s/api/carpool/offers/user/%d", localhost, userId))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -173,7 +233,7 @@ public class Service {
 
     public void executeGetMyRequests(Long userId) {
         Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s:3333/api/carpool/requests/user/%d", localhost, userId))
+                .url(String.format(Locale.getDefault(), "http://%s/api/carpool/requests/user/%d", localhost, userId))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
