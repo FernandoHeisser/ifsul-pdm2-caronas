@@ -14,7 +14,7 @@ import com.example.caronas.databinding.ActivityHomeBinding;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private final Service service = new Service();
+    private Service service;
 
     public Service getService() {
         return service;
@@ -41,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        service = new Service();
         execute();
         super.onCreate(savedInstanceState);
 

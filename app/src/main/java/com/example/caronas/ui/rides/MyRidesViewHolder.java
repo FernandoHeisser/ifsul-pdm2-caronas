@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 
 public class MyRidesViewHolder extends RecyclerView.ViewHolder {
 
-    private final Service service = new Service();
+    private final Service service;
 
     private final TextView textViewCardTitle;
     private final TextView textViewMyRideFrom;
@@ -35,8 +35,11 @@ public class MyRidesViewHolder extends RecyclerView.ViewHolder {
 
     private Long vacancies;
 
-    public MyRidesViewHolder(@NonNull @NotNull View itemView) {
+    public MyRidesViewHolder(@NonNull @NotNull View itemView, Service service) {
         super(itemView);
+
+        this.service = service;
+
         textViewCardTitle = itemView.findViewById(R.id.textViewCardTitle);
         textViewMyRideFrom = itemView.findViewById(R.id.textViewMyRideFrom);
         textViewMyRideTo = itemView.findViewById(R.id.textViewMyRideTo);

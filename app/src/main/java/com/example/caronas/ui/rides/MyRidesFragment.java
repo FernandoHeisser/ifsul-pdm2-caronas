@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.HomeActivity;
 import com.example.caronas.R;
+import com.example.caronas.Service;
 import com.example.caronas.models.Offer;
 import com.example.caronas.models.Ride;
 import com.example.caronas.models.RideRequest;
@@ -24,8 +25,11 @@ public class MyRidesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         HomeActivity homeActivity = (HomeActivity) getActivity();
         assert homeActivity != null;
-        List<Offer> myOffers = homeActivity.getService().getMyOffers();
-        List<RideRequest> myRideRequests = homeActivity.getService().getMyRequests();
+
+        Service service = homeActivity.getService();
+
+        List<Offer> myOffers = service.getMyOffers();
+        List<RideRequest> myRideRequests = service.getMyRequests();
 
         List<Ride> myRides = new ArrayList<>();
 
@@ -37,7 +41,7 @@ public class MyRidesFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_rides);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new MyRidesAdapter(myRides));
+        recyclerView.setAdapter(new MyRidesAdapter(myRides, service));
 
         return view;
     }

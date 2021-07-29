@@ -19,11 +19,12 @@ import java.util.List;
 
 public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
 
-    private final Service service = new Service();
-    private List<Ride> myRides;
+    private final Service service;
+    private final List<Ride> myRides;
 
-    public MyRidesAdapter(List<Ride> myRides) {
+    public MyRidesAdapter(List<Ride> myRides, Service service) {
         this.myRides = myRides;
+        this.service = service;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
     @Override
     public MyRidesViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new MyRidesViewHolder(view);
+        return new MyRidesViewHolder(view, service);
     }
 
     @Override
