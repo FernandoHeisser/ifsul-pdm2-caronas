@@ -15,19 +15,18 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.caronas.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private final Service service = new Service();
-    private List<User> users = new ArrayList<>();
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private Service service;
+    private List<User> users;
     private ImageButton imageButton;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        service.executeGetUsers();
+        service = new Service();
         users = service.getUsers();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -51,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void handleRegister(View view) {
+    public void handleRegister(View view) throws Exception {
         EditText editTextName = findViewById(R.id.editTextName);
         EditText editTextEmailRegister = findViewById(R.id.editTextEmailRegister);
         EditText editTextPasswordRegister = findViewById(R.id.editTextPasswordRegister);
@@ -100,16 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         }
-
-        Thread thread = new Thread(() -> {
-            try {
-                service.createUser(newUser);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(view.getContext(), "Erro no cadastro, tente novamente", Toast.LENGTH_LONG).show();
-            }
-        });
-        thread.start();
+        service.createUser(newUser);
 
         Toast.makeText(view.getContext(), "Cadastro realizado!", Toast.LENGTH_LONG).show();
 
