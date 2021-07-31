@@ -36,99 +36,181 @@ public class Service {
 
     private static final String localhost = "192.168.1.7:3333";
 
+    public Long currentUserId;
+
     public List<User> getUsers() {
+        Thread thread = new Thread(() -> {
+            try {
+                executeGetUsers();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
         return users;
     }
 
-    public List<Offer> getOthersOffers() {
+    public List<Offer> getOthersOffers(Long userId) {
+        Thread thread = new Thread(() -> {
+            try {
+                executeGetOthersOffers(userId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
         return othersOffers;
     }
 
-    public List<RideRequest> getOthersRequests() {
+    public List<RideRequest> getOthersRequests(Long userId) {
+        Thread thread = new Thread(() -> {
+            try {
+                executeGetOthersRequests(userId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
         return othersRideRequests;
     }
 
-    public List<Offer> getMyOffers() {
+    public List<Offer> getMyOffers(Long userId) {
+        Thread thread = new Thread(() -> {
+            try {
+                executeGetMyOffers(userId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
         return myOffers;
     }
 
-    public List<RideRequest> getMyRequests() {
+    public List<RideRequest> getMyRequests(Long userId) {
+        Thread thread = new Thread(() -> {
+            try {
+                executeGetMyRequests(userId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
         return myRideRequests;
     }
 
-    public void createUser(User user) throws Exception {
-        String postBody = new Gson().toJson(user);
+    public void createUser(User user) {
+        Thread thread = new Thread(() -> {
+            try {
+                String postBody = new Gson().toJson(user);
 
-        Request request = new Request.Builder()
-                .url(String.format("http://%s/api/user", localhost))
-                .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
-                .build();
+                Request request = new Request.Builder()
+                        .url(String.format("http://%s/api/user", localhost))
+                        .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                        .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
 
-            System.out.println(Objects.requireNonNull(response.body()).string());
-        }
+                    System.out.println(Objects.requireNonNull(response.body()).string());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
-    public void addVacancy(Long offerId) throws Exception {
-        String postBody = "";
+    public void addVacancy(Long offerId) {
+        Thread thread = new Thread(() -> {
+            try {
+                String postBody = "";
 
-        Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s/api/vacancy/add/%d", localhost, offerId))
-                .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
-                .build();
+                Request request = new Request.Builder()
+                        .url(String.format(Locale.getDefault(), "http://%s/api/vacancy/add/%d", localhost, offerId))
+                        .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                        .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
 
-            System.out.println(Objects.requireNonNull(response.body()).string());
-        }
+                    System.out.println(Objects.requireNonNull(response.body()).string());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
-    public void removeVacancy(Long offerId) throws Exception {
-        String postBody = "";
+    public void removeVacancy(Long offerId) {
+        Thread thread = new Thread(() -> {
+            try {
+                String postBody = "";
 
-        Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s/api/vacancy/remove/%d", localhost, offerId))
-                .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
-                .build();
+                Request request = new Request.Builder()
+                        .url(String.format(Locale.getDefault(), "http://%s/api/vacancy/remove/%d", localhost, offerId))
+                        .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                        .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
 
-            System.out.println(Objects.requireNonNull(response.body()).string());
-        }
+                    System.out.println(Objects.requireNonNull(response.body()).string());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
-    public void cancelOffer(Long offerId) throws Exception {
-        String postBody = "";
+    public void cancelOffer(Long offerId) {
+        Thread thread = new Thread(() -> {
+            try {
+                String postBody = "";
 
-        Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s/api/cancel/offer/%d", localhost, offerId))
-                .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
-                .build();
+                Request request = new Request.Builder()
+                        .url(String.format(Locale.getDefault(), "http://%s/api/cancel/offer/%d", localhost, offerId))
+                        .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                        .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
 
-            System.out.println(Objects.requireNonNull(response.body()).string());
-        }
+                    System.out.println(Objects.requireNonNull(response.body()).string());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
-    public void cancelRequest(Long requestId) throws Exception {
-        String postBody = "";
+    public void cancelRequest(Long requestId) {
+        Thread thread = new Thread(() -> {
+            try {
+                String postBody = "";
 
-        Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s/api/cancel/request/%d", localhost, requestId))
-                .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
-                .build();
+                Request request = new Request.Builder()
+                        .url(String.format(Locale.getDefault(), "http://%s/api/cancel/request/%d", localhost, requestId))
+                        .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                        .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
 
-            System.out.println(Objects.requireNonNull(response.body()).string());
-        }
+                    System.out.println(Objects.requireNonNull(response.body()).string());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     public void executeGetUsers() {

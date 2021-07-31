@@ -22,8 +22,9 @@ public class RequestsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         HomeActivity homeActivity = (HomeActivity) getActivity();
         assert homeActivity != null;
-        List<RideRequest> rideRequests = homeActivity.getService().getOthersRequests();
-        List<User> users = homeActivity.getService().getUsers();
+
+        List<RideRequest> rideRequests = homeActivity.service.getOthersRequests(homeActivity.service.currentUserId);
+        List<User> users = homeActivity.service.getUsers();
 
         View view = inflater.inflate(R.layout.fragment_requests, container, false);
 

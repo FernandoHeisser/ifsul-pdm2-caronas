@@ -1,10 +1,12 @@
 package com.example.caronas;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -14,35 +16,21 @@ import com.example.caronas.databinding.ActivityHomeBinding;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Service service;
-
-    public Service getService() {
-        return service;
-    }
-
-    public void execute() {
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        Long userId = pref.getLong("user_id", -1);
-
-        Thread thread = new Thread(() -> {
-            try {
-                service.executeGetOthersOffers(userId);
-                service.executeGetOthersRequests(userId);
-                service.executeGetMyOffers(userId);
-                service.executeGetMyRequests(userId);
-                service.executeGetUsers();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(this.getApplicationContext(), "Erro de conexão, tente novamente", Toast.LENGTH_LONG).show();
-            }
-        });
-        thread.start();
-    }
+    public Service service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        Long userId = pref.getLong("user_id", -1);
+
         service = new Service();
-        execute();
+        service.executeGetOthersOffers(userId);
+        service.executeGetOthersRequests(userId);
+        service.executeGetMyOffers(userId);
+        service.executeGetMyRequests(userId);
+        service.executeGetUsers();
+        service.currentUserId = userId;
+
         super.onCreate(savedInstanceState);
 
         com.example.caronas.databinding.ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
@@ -56,4 +44,45 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    @SuppressLint("ResourceType")
+    public void refreshMyRidesFragment() {
+        Fragment frg;
+        frg = getSupportFragmentManager().findFragmentById(R.layout.fragment_rides);
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        assert frg != null;
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+
+        finish();
+        startActivity(getIntent());
+    }
+
+    @SuppressLint("ResourceType")
+    public void refreshOffersFragment() {
+        Fragment frg;
+        frg = getSupportFragmentManager().findFragmentById(R.layout.fragment_offers);
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        assert frg != null;
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+
+        finish();
+        startActivity(getIntent());
+    }
+
+    @SuppressLint("ResourceType")
+    public void refreshRequestsFragment() {
+        Fragment frg;
+        frg = getSupportFragmentManager().findFragmentById(R.layout.fragment_requests);
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        assert frg != null;
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+
+        finish();
+        startActivity(getIntent());
+    }
 }

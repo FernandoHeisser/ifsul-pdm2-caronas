@@ -1,6 +1,7 @@
 package com.example.caronas.ui.rides;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caronas.HomeActivity;
 import com.example.caronas.R;
 import com.example.caronas.Service;
 import com.example.caronas.models.Offer;
@@ -22,9 +24,12 @@ public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
     private final Service service;
     private final List<Ride> myRides;
 
-    public MyRidesAdapter(List<Ride> myRides, Service service) {
+    public MyRidesAdapter(List<Ride> myRides, Context context) {
+        HomeActivity homeActivity = (HomeActivity) context;
+        assert homeActivity != null;
+
+        service = homeActivity.service;
         this.myRides = myRides;
-        this.service = service;
     }
 
     @Override
@@ -49,22 +54,17 @@ public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
             builder.setTitle("Deletar carona");
             builder.setMessage("Você tem certeza?");
             builder.setPositiveButton("SIM", (dialog, which) -> {
-                Thread thread = new Thread(() -> {
-                    try {
-                        if (myRides.get(position).getClass().equals(Offer.class)) {
-                            service.cancelOffer(myRides.get(position).getId());
-                        } else {
-                            service.cancelRequest(myRides.get(position).getId());
-                        }
-                        myRides.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, getItemCount());
-                        dialog.dismiss();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                thread.start();
+
+                if (myRides.get(position).getClass().equals(Offer.class)) {
+                    service.cancelOffer(myRides.get(position).getId());
+                } else {
+                    service.cancelRequest(myRides.get(position).getId());
+                }
+                myRides.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, getItemCount());
+                dialog.dismiss();
+
             });
             builder.setNegativeButton("NÃO", (dialog, which) -> dialog.dismiss());
             AlertDialog alert = builder.create();

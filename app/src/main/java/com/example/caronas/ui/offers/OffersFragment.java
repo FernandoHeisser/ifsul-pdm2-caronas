@@ -22,8 +22,9 @@ public class OffersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         HomeActivity homeActivity = (HomeActivity) getActivity();
         assert homeActivity != null;
-        List<Offer> offers = homeActivity.getService().getOthersOffers();
-        List<User> users = homeActivity.getService().getUsers();
+
+        List<Offer> offers = homeActivity.service.getOthersOffers(homeActivity.service.currentUserId);
+        List<User> users = homeActivity.service.getUsers();
 
         View view = inflater.inflate(R.layout.fragment_offers, container, false);
 

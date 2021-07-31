@@ -79,28 +79,22 @@ public class MyRidesViewHolder extends RecyclerView.ViewHolder {
             textViewCardTitle.setText("Oferta");
             textViewMyRideVacancies.setText(this.vacancies.toString());
             buttonMyRideAdd.setOnClickListener(v -> {
-                Thread thread = new Thread(() -> {
-                    try {
-                        service.addVacancy(ride.getId());
-                        this.vacancies++;
-                        textViewMyRideVacancies.setText(this.vacancies.toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                thread.start();
+                try {
+                    service.addVacancy(ride.getId());
+                    this.vacancies++;
+                    textViewMyRideVacancies.setText(this.vacancies.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
             buttonMyRideRemove.setOnClickListener(v -> {
-                Thread thread = new Thread(() -> {
-                    try {
-                        service.removeVacancy(ride.getId());
-                        this.vacancies--;
-                        textViewMyRideVacancies.setText(this.vacancies.toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                thread.start();
+                try {
+                    service.removeVacancy(ride.getId());
+                    this.vacancies--;
+                    textViewMyRideVacancies.setText(this.vacancies.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
         } else {
             textViewCardTitle.setText("Pedido");
