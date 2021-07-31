@@ -1,5 +1,7 @@
 package com.example.caronas;
 
+import android.app.Application;
+
 import com.example.caronas.models.Offer;
 import com.example.caronas.models.Ride;
 import com.example.caronas.models.RideRequest;
@@ -25,7 +27,23 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Service {
+public class Service extends Application {
+
+    private static Service instance;
+
+    public static Service getInstance() {
+        if (instance == null) {
+            synchronized (Service.class) {
+                if (instance == null)
+                    instance = new Service();
+            }
+        }
+        return instance;
+    }
+
+    private Service() {
+
+    }
 
     private final OkHttpClient client = new OkHttpClient();
 

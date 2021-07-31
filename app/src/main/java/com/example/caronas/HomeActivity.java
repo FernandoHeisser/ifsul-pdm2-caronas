@@ -20,7 +20,7 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         Long userId = pref.getLong("user_id", -1);
 
-        service = new Service();
+        service = Service.getInstance();
         service.executeGetOthersOffers(userId);
         service.executeGetOthersRequests(userId);
         service.executeGetMyOffers(userId);

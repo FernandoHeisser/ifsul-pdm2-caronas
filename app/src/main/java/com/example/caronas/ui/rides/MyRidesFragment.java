@@ -1,10 +1,10 @@
 package com.example.caronas.ui.rides;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
+import com.example.caronas.ui.creation.CreationActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MyRidesFragment extends Fragment {
@@ -21,7 +22,8 @@ public class MyRidesFragment extends Fragment {
 
         FloatingActionButton fab = view.findViewById(R.id.floating_action_button);
         fab.setOnClickListener(v -> {
-            Toast.makeText(view.getContext(), "Funcionou", Toast.LENGTH_LONG).show();
+            Intent myIntent = new Intent(view.getContext(), CreationActivity.class);
+            startActivity(myIntent);
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_rides);

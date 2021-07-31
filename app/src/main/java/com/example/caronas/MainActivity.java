@@ -18,10 +18,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final Service service = new Service();
+    private Service service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        service = Service.getInstance();
         service.executeGetUsers();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

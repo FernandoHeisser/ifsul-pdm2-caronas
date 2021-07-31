@@ -21,6 +21,14 @@ public class Ride {
         return phone;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
+    }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }

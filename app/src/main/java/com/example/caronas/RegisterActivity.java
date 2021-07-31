@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        service = new Service();
+        service = Service.getInstance();
         users = service.users;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
