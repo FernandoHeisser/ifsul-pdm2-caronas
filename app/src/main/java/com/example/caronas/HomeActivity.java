@@ -1,12 +1,9 @@
 package com.example.caronas;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -29,7 +26,6 @@ public class HomeActivity extends AppCompatActivity {
         service.executeGetMyOffers(userId);
         service.executeGetMyRequests(userId);
         service.executeGetUsers();
-        service.currentUserId = userId;
 
         super.onCreate(savedInstanceState);
 
@@ -42,47 +38,5 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-    }
-
-    @SuppressLint("ResourceType")
-    public void refreshMyRidesFragment() {
-        Fragment frg;
-        frg = getSupportFragmentManager().findFragmentById(R.layout.fragment_rides);
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        assert frg != null;
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();
-
-        finish();
-        startActivity(getIntent());
-    }
-
-    @SuppressLint("ResourceType")
-    public void refreshOffersFragment() {
-        Fragment frg;
-        frg = getSupportFragmentManager().findFragmentById(R.layout.fragment_offers);
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        assert frg != null;
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();
-
-        finish();
-        startActivity(getIntent());
-    }
-
-    @SuppressLint("ResourceType")
-    public void refreshRequestsFragment() {
-        Fragment frg;
-        frg = getSupportFragmentManager().findFragmentById(R.layout.fragment_requests);
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        assert frg != null;
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();
-
-        finish();
-        startActivity(getIntent());
     }
 }

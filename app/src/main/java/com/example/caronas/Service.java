@@ -1,6 +1,7 @@
 package com.example.caronas;
 
 import com.example.caronas.models.Offer;
+import com.example.caronas.models.Ride;
 import com.example.caronas.models.RideRequest;
 import com.example.caronas.models.User;
 import com.google.gson.Gson;
@@ -28,75 +29,15 @@ public class Service {
 
     private final OkHttpClient client = new OkHttpClient();
 
-    private List<User> users = new ArrayList<>();
-    private List<Offer> othersOffers = new ArrayList<>();
-    private List<RideRequest> othersRideRequests = new ArrayList<>();
+    public List<User> users = new ArrayList<>();
+    public List<Offer> othersOffers = new ArrayList<>();
+    public List<RideRequest> othersRideRequests = new ArrayList<>();
+    public List<Ride> myRides = new ArrayList<>();
+
     private List<Offer> myOffers = new ArrayList<>();
     private List<RideRequest> myRideRequests = new ArrayList<>();
 
     private static final String localhost = "192.168.1.7:3333";
-
-    public Long currentUserId;
-
-    public List<User> getUsers() {
-        Thread thread = new Thread(() -> {
-            try {
-                executeGetUsers();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
-        return users;
-    }
-
-    public List<Offer> getOthersOffers(Long userId) {
-        Thread thread = new Thread(() -> {
-            try {
-                executeGetOthersOffers(userId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
-        return othersOffers;
-    }
-
-    public List<RideRequest> getOthersRequests(Long userId) {
-        Thread thread = new Thread(() -> {
-            try {
-                executeGetOthersRequests(userId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
-        return othersRideRequests;
-    }
-
-    public List<Offer> getMyOffers(Long userId) {
-        Thread thread = new Thread(() -> {
-            try {
-                executeGetMyOffers(userId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
-        return myOffers;
-    }
-
-    public List<RideRequest> getMyRequests(Long userId) {
-        Thread thread = new Thread(() -> {
-            try {
-                executeGetMyRequests(userId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
-        return myRideRequests;
-    }
 
     public void createUser(User user) {
         Thread thread = new Thread(() -> {
@@ -308,6 +249,7 @@ public class Service {
                     Type listType = new TypeToken<List<Offer>>() {
                     }.getType();
                     myOffers = new Gson().fromJson(Objects.requireNonNull(responseBody).string(), listType);
+                    myRides.addAll(myOffers);
                 }
             }
         });
@@ -333,6 +275,7 @@ public class Service {
                     Type listType = new TypeToken<List<RideRequest>>() {
                     }.getType();
                     myRideRequests = new Gson().fromJson(Objects.requireNonNull(responseBody).string(), listType);
+                    myRides.addAll(myRideRequests);
                 }
             }
         });

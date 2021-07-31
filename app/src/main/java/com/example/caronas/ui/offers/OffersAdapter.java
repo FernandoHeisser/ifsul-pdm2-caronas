@@ -1,5 +1,6 @@
 package com.example.caronas.ui.offers;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,22 +8,22 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caronas.HomeActivity;
 import com.example.caronas.R;
-import com.example.caronas.models.Offer;
+import com.example.caronas.Service;
 import com.example.caronas.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
 
-    private final List<Offer> offers;
-    private final List<User> users;
+    private final Service service;
 
-    public OffersAdapter(List<Offer> offers, List<User> users) {
-        this.offers = offers;
-        this.users = users;
+    public OffersAdapter(Context context) {
+        HomeActivity homeActivity = (HomeActivity) context;
+        assert homeActivity != null;
+
+        service = homeActivity.service;
     }
 
     @Override
@@ -41,16 +42,16 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull @NotNull OffersViewHolder holder, int position) {
         User currentUser = null;
-        for (User user : users) {
-            if (user.getId().equals(offers.get(position).getUser_id())) {
+        for (User user : service.users) {
+            if (user.getId().equals(service.othersOffers.get(position).getUser_id())) {
                 currentUser = user;
             }
         }
-        holder.setOffer(this.offers.get(position), currentUser);
+        holder.setOffer(service.othersOffers.get(position), currentUser);
     }
 
     @Override
     public int getItemCount() {
-        return offers.size();
+        return service.othersOffers.size();
     }
 }

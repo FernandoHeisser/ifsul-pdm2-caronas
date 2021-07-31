@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         service = new Service();
-        users = service.getUsers();
+        users = service.users;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         imageButton = findViewById(R.id.imageButton);
@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void handleRegister(View view) throws Exception {
+    public void handleRegister(View view) {
         EditText editTextName = findViewById(R.id.editTextName);
         EditText editTextEmailRegister = findViewById(R.id.editTextEmailRegister);
         EditText editTextPasswordRegister = findViewById(R.id.editTextPasswordRegister);

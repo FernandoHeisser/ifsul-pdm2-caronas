@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editTextEmail = findViewById(R.id.editTextEmail);
         EditText editTextPassword = findViewById(R.id.editTextPassword);
-        List<User> users = service.getUsers();
+        List<User> users = service.users;
 
         if (TextUtils.isEmpty(editTextEmail.getText())) {
             editTextEmail.setError("Digite o seu email!");

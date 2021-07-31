@@ -1,5 +1,6 @@
 package com.example.caronas.ui.requests;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,22 +8,22 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caronas.HomeActivity;
 import com.example.caronas.R;
-import com.example.caronas.models.RideRequest;
+import com.example.caronas.Service;
 import com.example.caronas.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolder> {
 
-    private final List<RideRequest> rideRequests;
-    private final List<User> users;
+    private final Service service;
 
-    public RequestsAdapter(List<RideRequest> rideRequests, List<User> users) {
-        this.rideRequests = rideRequests;
-        this.users = users;
+    public RequestsAdapter(Context context) {
+        HomeActivity homeActivity = (HomeActivity) context;
+        assert homeActivity != null;
+
+        service = homeActivity.service;
     }
 
     @Override
@@ -41,16 +42,16 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull @NotNull RequestsViewHolder holder, int position) {
         User currentUser = null;
-        for (User user : users) {
-            if (user.getId().equals(rideRequests.get(position).getUser_id())) {
+        for (User user : service.users) {
+            if (user.getId().equals(service.othersRideRequests.get(position).getUser_id())) {
                 currentUser = user;
             }
         }
-        holder.setRequest(this.rideRequests.get(position), currentUser);
+        holder.setRequest(service.othersRideRequests.get(position), currentUser);
     }
 
     @Override
     public int getItemCount() {
-        return rideRequests.size();
+        return service.othersRideRequests.size();
     }
 }
