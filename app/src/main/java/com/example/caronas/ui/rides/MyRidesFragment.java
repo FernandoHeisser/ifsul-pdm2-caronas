@@ -1,5 +1,6 @@
 package com.example.caronas.ui.rides;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MyRidesFragment extends Fragment {
 
+    private MyRidesAdapter myRidesAdapter;
+
+    @SuppressLint("NotifyDataSetChanged")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rides, container, false);
 
@@ -26,10 +30,12 @@ public class MyRidesFragment extends Fragment {
             startActivity(myIntent);
         });
 
+        myRidesAdapter = new MyRidesAdapter(getContext());
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_rides);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new MyRidesAdapter(getContext()));
+        recyclerView.setAdapter(myRidesAdapter);
 
         return view;
     }
@@ -37,5 +43,12 @@ public class MyRidesFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public void onResume() {
+        myRidesAdapter.notifyDataSetChanged();
+        super.onResume();
     }
 }
