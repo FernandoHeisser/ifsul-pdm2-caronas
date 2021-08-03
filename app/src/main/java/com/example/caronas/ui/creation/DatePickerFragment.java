@@ -37,10 +37,12 @@ public class DatePickerFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         LocalDate date = LocalDate.of( year , month+1 , day );
 
-        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String text = date.format(formatters);
+        if (!date.isBefore(LocalDate.now())) {
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String text = date.format(formatters);
 
-        TextView textView = requireActivity().findViewById(R.id.textViewDateCreation);
-        textView.setText(text);
+            TextView textView = requireActivity().findViewById(R.id.textViewDateCreation);
+            textView.setText(text);
+        }
     }
 }

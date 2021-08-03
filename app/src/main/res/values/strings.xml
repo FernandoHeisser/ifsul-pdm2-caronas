@@ -30,8 +30,8 @@
     <string name="date">Data</string>
     <string name="time">Hora</string>
     <string name="origin_destination">Qual a origem e destino da carona?</string>
-    <string name="origin">Origem</string>
-    <string name="destination">Destino</string>
+    <string name="origin">Ex: Cidade, Bairro, Rua</string>
+    <string name="destination">Ex: Cidade, Bairro, Rua</string>
     <string name="contact">Contato</string>
     <string name="vacancies_number">Número de vagas:</string>
 </resources>

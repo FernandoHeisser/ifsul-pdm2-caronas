@@ -80,6 +80,52 @@ public class Service extends Application {
         thread.start();
     }
 
+    public void createOffer(Offer offer) {
+        Thread thread = new Thread(() -> {
+            try {
+                String postBody = new Gson().toJson(offer);
+
+                Request request = new Request.Builder()
+                        .url(String.format("http://%s/api/carpool/offer", localhost))
+                        .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                        .build();
+
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    System.out.println(Objects.requireNonNull(response.body()).string());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+    }
+
+    public void createRideRequest(RideRequest rideRequest) {
+        Thread thread = new Thread(() -> {
+            try {
+                String postBody = new Gson().toJson(rideRequest);
+
+                Request request = new Request.Builder()
+                        .url(String.format("http://%s/api/carpool/request", localhost))
+                        .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                        .build();
+
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+
+                    System.out.println(Objects.requireNonNull(response.body()).string());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+    }
+
     public void addVacancy(Long offerId) {
         Thread thread = new Thread(() -> {
             try {

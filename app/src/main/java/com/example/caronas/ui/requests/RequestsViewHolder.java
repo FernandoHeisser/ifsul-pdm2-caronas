@@ -1,11 +1,13 @@
 package com.example.caronas.ui.requests;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
@@ -14,7 +16,9 @@ import com.example.caronas.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class RequestsViewHolder extends RecyclerView.ViewHolder {
 
@@ -41,25 +45,31 @@ public class RequestsViewHolder extends RecyclerView.ViewHolder {
         buttonRequestWhatsapp = itemView.findViewById(R.id.buttonRequestWhatsapp);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     public void setRequest(RideRequest rideRequest, User user) {
-        String addressFrom = String.format("%s, %s, %s", rideRequest.getFrom_city(), rideRequest.getFrom_neighborhood(), rideRequest.getFrom_street());
-        String addressTo = String.format("%s, %s, %s", rideRequest.getTo_city(), rideRequest.getTo_neighborhood(), rideRequest.getTo_street());
 
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String date = dateFormat.format(rideRequest.getStart_date());
+        if (Objects.nonNull(rideRequest.getFrom_city()) && Objects.nonNull(rideRequest.getFrom_neighborhood()) && Objects.nonNull(rideRequest.getFrom_street())) {
+            String addressFrom = String.format("%s, %s, %s", rideRequest.getFrom_city(), rideRequest.getFrom_neighborhood(), rideRequest.getFrom_street());
+            textViewRequestFrom.setText(addressFrom);
+        }
+        if (Objects.nonNull(rideRequest.getTo_city()) && Objects.nonNull(rideRequest.getTo_neighborhood()) && Objects.nonNull(rideRequest.getTo_street())) {
+            String addressTo = String.format("%s, %s, %s", rideRequest.getTo_city(), rideRequest.getTo_neighborhood(), rideRequest.getTo_street());
+            textViewRequestTo.setText(addressTo);
+        }
 
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        String time1 = timeFormat.format(rideRequest.getStart_date());
-        String time2 = timeFormat.format(rideRequest.getEnd_date());
-
-        textViewRequestFrom.setText(addressFrom);
-        textViewRequestTo.setText(addressTo);
-        textViewRequestDate.setText(date);
-        textViewRequestTime1.setText(time1);
-        textViewRequestTime2.setText(time2);
+        if (Objects.nonNull(rideRequest.getStart_date())) {
+            OffsetDateTime startDate = OffsetDateTime.parse(rideRequest.getStart_date(), DateTimeFormatter.ISO_DATE_TIME);
+            String date = startDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            String time1 = startDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+            textViewRequestDate.setText(date);
+            textViewRequestTime1.setText(time1);
+        }
+        if (Objects.nonNull(rideRequest.getEnd_date())) {
+            OffsetDateTime endDate = OffsetDateTime.parse(rideRequest.getEnd_date(), DateTimeFormatter.ISO_DATE_TIME);
+            String time2 = endDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+            textViewRequestTime2.setText(time2);
+        }
 
         if (user != null) {
             textViewRequestUser.setText(user.getName());

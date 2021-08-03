@@ -1,11 +1,13 @@
 package com.example.caronas.ui.rides;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
@@ -13,7 +15,9 @@ import com.example.caronas.models.Ride;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class MyRidesViewHolder extends RecyclerView.ViewHolder {
 
@@ -47,26 +51,31 @@ public class MyRidesViewHolder extends RecyclerView.ViewHolder {
         buttonMyRideCancel = itemView.findViewById(R.id.buttonMyRideCancel);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     public void setMyRide(Ride ride) {
-        String addressFrom = String.format("%s, %s, %s", ride.getFrom_city(), ride.getFrom_neighborhood(), ride.getFrom_street());
-        String addressTo = String.format("%s, %s, %s", ride.getTo_city(), ride.getTo_neighborhood(), ride.getTo_street());
 
+        if (Objects.nonNull(ride.getFrom_city()) && Objects.nonNull(ride.getFrom_neighborhood()) && Objects.nonNull(ride.getFrom_street())) {
+            String addressFrom = String.format("%s, %s, %s", ride.getFrom_city(), ride.getFrom_neighborhood(), ride.getFrom_street());
+            textViewMyRideFrom.setText(addressFrom);
+        }
+        if (Objects.nonNull(ride.getTo_city()) && Objects.nonNull(ride.getTo_neighborhood()) && Objects.nonNull(ride.getTo_street())) {
+            String addressTo = String.format("%s, %s, %s", ride.getTo_city(), ride.getTo_neighborhood(), ride.getTo_street());
+            textViewMyRideTo.setText(addressTo);
+        }
 
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String date = dateFormat.format(ride.getStart_date());
-
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        String time1 = timeFormat.format(ride.getStart_date());
-        String time2 = timeFormat.format(ride.getEnd_date());
-
-        textViewMyRideFrom.setText(addressFrom);
-        textViewMyRideTo.setText(addressTo);
-        textViewMyRideDate.setText(date);
-        textViewMyRideTime1.setText(time1);
-        textViewMyRideTime2.setText(time2);
+        if (Objects.nonNull(ride.getStart_date())) {
+            OffsetDateTime startDate = OffsetDateTime.parse(ride.getStart_date(), DateTimeFormatter.ISO_DATE_TIME);
+            String date = startDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            String time1 = startDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+            textViewMyRideDate.setText(date);
+            textViewMyRideTime1.setText(time1);
+        }
+        if (Objects.nonNull(ride.getEnd_date())) {
+            OffsetDateTime endDate = OffsetDateTime.parse(ride.getEnd_date(), DateTimeFormatter.ISO_DATE_TIME);
+            String time2 = endDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+            textViewMyRideTime2.setText(time2);
+        }
 
     }
 }

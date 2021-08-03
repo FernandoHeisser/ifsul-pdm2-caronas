@@ -1,11 +1,13 @@
 package com.example.caronas.ui.offers;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.R;
@@ -14,7 +16,9 @@ import com.example.caronas.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class OffersViewHolder extends RecyclerView.ViewHolder {
 
@@ -43,27 +47,34 @@ public class OffersViewHolder extends RecyclerView.ViewHolder {
         buttonOfferWhatsapp = itemView.findViewById(R.id.buttonOfferWhatsapp);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     public void setOffer(Offer offer, User user) {
 
-        String addressFrom = String.format("%s, %s, %s", offer.getFrom_city(), offer.getFrom_neighborhood(), offer.getFrom_street());
-        String addressTo = String.format("%s, %s, %s", offer.getTo_city(), offer.getTo_neighborhood(), offer.getTo_street());
+        if (Objects.nonNull(offer.getFrom_city()) && Objects.nonNull(offer.getFrom_neighborhood()) && Objects.nonNull(offer.getFrom_street())) {
+            String addressFrom = String.format("%s, %s, %s", offer.getFrom_city(), offer.getFrom_neighborhood(), offer.getFrom_street());
+            textViewOfferFrom.setText(addressFrom);
+        }
+        if (Objects.nonNull(offer.getTo_city()) && Objects.nonNull(offer.getTo_neighborhood()) && Objects.nonNull(offer.getTo_street())) {
+            String addressTo = String.format("%s, %s, %s", offer.getTo_city(), offer.getTo_neighborhood(), offer.getTo_street());
+            textViewOfferTo.setText(addressTo);
+        }
 
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String date = dateFormat.format(offer.getStart_date());
-
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        String time1 = timeFormat.format(offer.getStart_date());
-        String time2 = timeFormat.format(offer.getEnd_date());
-
-        textViewOfferFrom.setText(addressFrom);
-        textViewOfferTo.setText(addressTo);
-        textViewOfferDate.setText(date);
-        textViewOfferTime1.setText(time1);
-        textViewOfferTime2.setText(time2);
-        textViewOfferVacancies.setText(offer.getAvailable_vacancies().toString());
+        if (Objects.nonNull(offer.getStart_date())) {
+            OffsetDateTime startDate = OffsetDateTime.parse(offer.getStart_date(), DateTimeFormatter.ISO_DATE_TIME);
+            String date = startDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            String time1 = startDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+            textViewOfferDate.setText(date);
+            textViewOfferTime1.setText(time1);
+        }
+        if (Objects.nonNull(offer.getEnd_date())) {
+            OffsetDateTime endDate = OffsetDateTime.parse(offer.getEnd_date(), DateTimeFormatter.ISO_DATE_TIME);
+            String time2 = endDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+            textViewOfferTime2.setText(time2);
+        }
+        if (Objects.nonNull(offer.getAvailable_vacancies())) {
+            textViewOfferVacancies.setText(offer.getAvailable_vacancies().toString());
+        }
 
         if (user != null) {
             textViewOfferUser.setText(user.getName());
