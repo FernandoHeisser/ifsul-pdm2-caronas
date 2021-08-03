@@ -52,10 +52,21 @@ public class Service extends Application {
     public List<RideRequest> othersRideRequests = new ArrayList<>();
     public List<Ride> myRides = new ArrayList<>();
 
+    private Long lastIdCreated;
     private List<Offer> myOffers = new ArrayList<>();
     private List<RideRequest> myRideRequests = new ArrayList<>();
 
     private static final String localhost = "192.168.1.7:3333";
+
+    public Long getLastIdCreated() {
+        return  lastIdCreated;
+    }
+
+    private void setLastIdCreated(String string) {
+        string = string.replace("[", "");
+        string = string.replace("]", "");
+        lastIdCreated = Long.parseLong(string);
+    }
 
     public void createUser(User user) {
         Thread thread = new Thread(() -> {
@@ -82,30 +93,35 @@ public class Service extends Application {
 
     public void createOffer(Offer offer) {
         Thread thread = new Thread(() -> {
-            try {
-                String postBody = new Gson().toJson(offer);
+            String postBody = new Gson().toJson(offer);
 
-                Request request = new Request.Builder()
-                        .url(String.format("http://%s/api/carpool/offer", localhost))
-                        .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
-                        .build();
+            Request request = new Request.Builder()
+                    .url(String.format("http://%s/api/carpool/offer", localhost))
+                    .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
+                    .build();
 
-                try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response);
-
-                    System.out.println(Objects.requireNonNull(response.body()).string());
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (!response.isSuccessful())
+                            throw new IOException("Unexpected code " + response);
+
+                        setLastIdCreated(Objects.requireNonNull(responseBody).string());
+                    }
+                }
+            });
         });
         thread.start();
     }
 
     public void createRideRequest(RideRequest rideRequest) {
         Thread thread = new Thread(() -> {
-            try {
                 String postBody = new Gson().toJson(rideRequest);
 
                 Request request = new Request.Builder()
@@ -113,15 +129,22 @@ public class Service extends Application {
                         .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                         .build();
 
-                try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response);
-
-                    System.out.println(Objects.requireNonNull(response.body()).string());
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (!response.isSuccessful())
+                            throw new IOException("Unexpected code " + response);
+
+                        setLastIdCreated(Objects.requireNonNull(responseBody).string());
+                    }
+                }
+            });
         });
         thread.start();
     }
@@ -210,6 +233,7 @@ public class Service extends Application {
                         throw new IOException("Unexpected code " + response);
 
                     System.out.println(Objects.requireNonNull(response.body()).string());
+                    return;
                 }
             } catch (Exception e) {
                 e.printStackTrace();

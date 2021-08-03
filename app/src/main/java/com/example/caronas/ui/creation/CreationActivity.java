@@ -229,6 +229,7 @@ public class CreationActivity extends AppCompatActivity {
             offer.setAvailable_vacancies(vacancies);
 
             service.createOffer(offer);
+            offer.setId(service.getLastIdCreated());
             service.myRides.add(offer);
 
             Toast.makeText(view.getContext(), "Cadastro realizado!", Toast.LENGTH_LONG).show();
@@ -250,6 +251,7 @@ public class CreationActivity extends AppCompatActivity {
             rideRequest.setEnd_date(endDateOffsetDateTime.format(DateTimeFormatter.ISO_DATE_TIME));
 
             service.createRideRequest(rideRequest);
+            rideRequest.setId(service.getLastIdCreated());
             service.myRides.add(rideRequest);
 
             Toast.makeText(view.getContext(), "Cadastro realizado!", Toast.LENGTH_LONG).show();
