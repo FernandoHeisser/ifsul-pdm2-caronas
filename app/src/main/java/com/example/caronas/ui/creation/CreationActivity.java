@@ -236,7 +236,6 @@ public class CreationActivity extends AppCompatActivity {
 
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
-            finish();
         } else {
             RideRequest rideRequest = new RideRequest();
             rideRequest.setUser_id(userId);
@@ -258,7 +257,7 @@ public class CreationActivity extends AppCompatActivity {
 
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
-            finish();
         }
+        finish();
     }
 }
