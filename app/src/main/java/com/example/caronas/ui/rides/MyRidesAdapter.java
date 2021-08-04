@@ -16,6 +16,7 @@ import com.example.caronas.HomeActivity;
 import com.example.caronas.R;
 import com.example.caronas.Service;
 import com.example.caronas.models.Offer;
+import com.example.caronas.models.RideRequest;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,10 +47,10 @@ public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyRidesViewHolder holder, int position) {
-        if(Objects.nonNull(service.myRides.get(position)) && Objects.nonNull(service.myRides.get(position).getId())) {
+        if (Objects.nonNull(service.myRides.get(position)) && Objects.nonNull(service.myRides.get(position).getId())) {
             holder.setMyRide(service.myRides.get(position));
             holder.buttonMyRideCancel.setOnClickListener(v -> {
 
@@ -60,12 +61,13 @@ public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
 
                     if (service.myRides.get(position).getClass().equals(Offer.class)) {
                         service.cancelOffer(service.myRides.get(position).getId());
+                        service.myOffers.removeIf(offer -> offer.getId().equals(service.myRides.get(position).getId()));
                     } else {
                         service.cancelRequest(service.myRides.get(position).getId());
+                        service.myRideRequests.removeIf(rideRequest -> rideRequest.getId().equals(service.myRides.get(position).getId()));
                     }
-                    service.myRides.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, getItemCount());
+                    service.myRides.remove(service.myRides.get(position));
+                    notifyDataSetChanged();
                     dialog.dismiss();
 
                 });
@@ -98,7 +100,7 @@ public class MyRidesAdapter extends RecyclerView.Adapter<MyRidesViewHolder> {
                         e.printStackTrace();
                     }
                 });
-            } else {
+            } else if (service.myRides.get(position).getClass().equals(RideRequest.class)) {
                 holder.textViewCardTitle.setText("Pedido");
                 holder.textViewMyRideVacanciesLabel.setText("");
                 holder.buttonMyRideAdd.setVisibility(View.GONE);

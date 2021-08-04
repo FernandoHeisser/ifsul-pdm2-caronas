@@ -228,9 +228,23 @@ public class CreationActivity extends AppCompatActivity {
             offer.setEnd_date(endDateOffsetDateTime.format(DateTimeFormatter.ISO_DATE_TIME));
             offer.setAvailable_vacancies(vacancies);
 
-            service.createOffer(offer);
-            offer.setId(service.getLastIdCreated());
-            service.myRides.add(offer);
+            Thread thread = new Thread(() -> {
+                try {
+                    String stringId = service.createOffer(offer);
+
+                    stringId = stringId.replace("[", "");
+                    stringId = stringId.replace("]", "");
+
+                    Long longId = Long.parseLong(stringId);
+
+                    offer.setId(longId);
+
+                    service.myRides.add(offer);
+                } catch (Exception ignored) {
+
+                }
+            });
+            thread.start();
 
             Toast.makeText(view.getContext(), "Cadastro realizado!", Toast.LENGTH_LONG).show();
 
@@ -249,9 +263,24 @@ public class CreationActivity extends AppCompatActivity {
             rideRequest.setStart_date(startDateOffsetDateTime.format(DateTimeFormatter.ISO_DATE_TIME));
             rideRequest.setEnd_date(endDateOffsetDateTime.format(DateTimeFormatter.ISO_DATE_TIME));
 
-            service.createRideRequest(rideRequest);
-            rideRequest.setId(service.getLastIdCreated());
-            service.myRides.add(rideRequest);
+            Thread thread = new Thread(() -> {
+                try {
+                    String stringId = service.createRideRequest(rideRequest);
+
+                    stringId = stringId.replace("[", "");
+                    stringId = stringId.replace("]", "");
+
+                    Long longId = Long.parseLong(stringId);
+
+                    rideRequest.setId(longId);
+
+                    service.myRides.add(rideRequest);
+
+                } catch (Exception ignored) {
+
+                }
+            });
+            thread.start();
 
             Toast.makeText(view.getContext(), "Cadastro realizado!", Toast.LENGTH_LONG).show();
 
