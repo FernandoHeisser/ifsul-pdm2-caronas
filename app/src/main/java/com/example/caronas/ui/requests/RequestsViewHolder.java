@@ -28,9 +28,9 @@ public class RequestsViewHolder extends RecyclerView.ViewHolder {
     private final TextView textViewRequestTime1;
     private final TextView textViewRequestTime2;
     private final TextView textViewRequestUser;
-    private final Button buttonRequestFav;
-    private final Button buttonRequestCall;
-    private final Button buttonRequestWhatsapp;
+    protected final Button buttonRequestFav;
+    protected final Button buttonRequestCall;
+    protected final Button buttonRequestWhatsapp;
 
     public RequestsViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -74,15 +74,5 @@ public class RequestsViewHolder extends RecyclerView.ViewHolder {
         if (user != null) {
             textViewRequestUser.setText(user.getName());
         }
-
-        buttonRequestFav.setOnClickListener(v -> {
-
-        });
-        buttonRequestCall.setOnClickListener(v -> {
-
-        });
-        buttonRequestWhatsapp.setOnClickListener(v -> {
-
-        });
     }
 }

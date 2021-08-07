@@ -29,9 +29,9 @@ public class OffersViewHolder extends RecyclerView.ViewHolder {
     private final TextView textViewOfferTime2;
     private final TextView textViewOfferUser;
     private final TextView textViewOfferVacancies;
-    private final Button buttonOfferFav;
-    private final Button buttonOfferCall;
-    private final Button buttonOfferWhatsapp;
+    protected final Button buttonOfferFav;
+    protected final Button buttonOfferCall;
+    protected final Button buttonOfferWhatsapp;
 
     public OffersViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -79,15 +79,5 @@ public class OffersViewHolder extends RecyclerView.ViewHolder {
         if (user != null) {
             textViewOfferUser.setText(user.getName());
         }
-
-        buttonOfferFav.setOnClickListener(v -> {
-
-        });
-        buttonOfferCall.setOnClickListener(v -> {
-
-        });
-        buttonOfferWhatsapp.setOnClickListener(v -> {
-
-        });
     }
 }
