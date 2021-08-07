@@ -143,8 +143,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:layout_weight="1"
                     android:text="@string/add_vacancy"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     tools:ignore="ButtonStyle" />
 
                 <Button
@@ -152,19 +153,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:layout_weight="1"
                     android:text="@string/remove_vacancy"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     app:rippleColor="#FFFFFF"
                     tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/buttonMyRideCancel"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:text="@string/cancel"
-                    android:textSize="12sp"
+                    android:textSize="9sp"
                     app:backgroundTint="#F44336"
                     app:rippleColor="#FFFFFF"
                     tools:ignore="ButtonStyle" />

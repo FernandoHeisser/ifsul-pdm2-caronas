@@ -146,6 +146,7 @@
                     android:layout_weight="1"
                     android:text=""
                     app:icon="@android:drawable/star_off"
+                    app:iconSize="24sp"
                     tools:ignore="ButtonStyle" />
 
                 <Button
@@ -155,6 +156,7 @@
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:text="@string/call"
+                    android:textSize="12sp"
                     tools:ignore="ButtonStyle" />
 
                 <Button
@@ -164,6 +166,7 @@
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:text="@string/whatsapp"
+                    android:textSize="12sp"
                     app:backgroundTint="#009688"
                     app:rippleColor="#FFFFFF"
                     tools:ignore="ButtonStyle" />
