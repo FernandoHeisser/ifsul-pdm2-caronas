@@ -34,4 +34,6 @@
     <string name="destination">Ex: Cidade, Bairro, Rua</string>
     <string name="contact">Contato</string>
     <string name="vacancies_number">Número de vagas:</string>
+    <string name="originHint">Escolha a origem</string>
+    <string name="destinationHint">Escolha o destino</string>
 </resources>

@@ -54,7 +54,7 @@ public class Service extends Application {
     public List<Offer> myOffers = new ArrayList<>();
     public List<RideRequest> myRideRequests = new ArrayList<>();
 
-    private static final String localhost = "192.168.1.7:3333";
+    private static final String localhost = "192.168.1.8:3333";
 
     public void createUser(User user) {
         Thread thread = new Thread(() -> {
