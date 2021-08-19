@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onResume() {
+        service.executeGetUsers();
+        super.onResume();
+    }
+
     public void handleLogin(View view) {
         boolean userExists = false;
 
