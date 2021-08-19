@@ -54,7 +54,7 @@ public class Service extends Application {
     public List<Offer> myOffers = new ArrayList<>();
     public List<RideRequest> myRideRequests = new ArrayList<>();
 
-    private static final String localhost = "192.168.1.8:3333";
+    private static final String localhost = "http://192.168.1.3:3333/api";
 
     public void createUser(User user) {
         Thread thread = new Thread(() -> {
@@ -62,7 +62,7 @@ public class Service extends Application {
                 String postBody = new Gson().toJson(user);
 
                 Request request = new Request.Builder()
-                        .url(String.format("http://%s/api/user", localhost))
+                        .url(String.format("%s/user", localhost))
                         .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                         .build();
 
@@ -83,7 +83,7 @@ public class Service extends Application {
         String postBody = new Gson().toJson(offer);
 
         Request request = new Request.Builder()
-                .url(String.format("http://%s/api/carpool/offer", localhost))
+                .url(String.format("%s/carpool/offer", localhost))
                 .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                 .build();
 
@@ -96,7 +96,7 @@ public class Service extends Application {
         String postBody = new Gson().toJson(rideRequest);
 
         Request request = new Request.Builder()
-                .url(String.format("http://%s/api/carpool/request", localhost))
+                .url(String.format("%s/carpool/request", localhost))
                 .post(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                 .build();
 
@@ -111,7 +111,7 @@ public class Service extends Application {
                 String postBody = "";
 
                 Request request = new Request.Builder()
-                        .url(String.format(Locale.getDefault(), "http://%s/api/vacancy/add/%d", localhost, offerId))
+                        .url(String.format(Locale.getDefault(), "%s/vacancy/add/%d", localhost, offerId))
                         .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                         .build();
 
@@ -134,7 +134,7 @@ public class Service extends Application {
                 String postBody = "";
 
                 Request request = new Request.Builder()
-                        .url(String.format(Locale.getDefault(), "http://%s/api/vacancy/remove/%d", localhost, offerId))
+                        .url(String.format(Locale.getDefault(), "%s/vacancy/remove/%d", localhost, offerId))
                         .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                         .build();
 
@@ -157,7 +157,7 @@ public class Service extends Application {
                 String postBody = "";
 
                 Request request = new Request.Builder()
-                        .url(String.format(Locale.getDefault(), "http://%s/api/cancel/offer/%d", localhost, offerId))
+                        .url(String.format(Locale.getDefault(), "%s/cancel/offer/%d", localhost, offerId))
                         .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                         .build();
 
@@ -180,7 +180,7 @@ public class Service extends Application {
                 String postBody = "";
 
                 Request request = new Request.Builder()
-                        .url(String.format(Locale.getDefault(), "http://%s/api/cancel/request/%d", localhost, requestId))
+                        .url(String.format(Locale.getDefault(), "%s/cancel/request/%d", localhost, requestId))
                         .put(RequestBody.create(postBody, MediaType.parse("application/json; charset=utf-8")))
                         .build();
 
@@ -199,7 +199,7 @@ public class Service extends Application {
 
     public void executeGetUsers() {
         Request request = new Request.Builder()
-                .url(String.format("http://%s/api/users", localhost))
+                .url(String.format("%s/users", localhost))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -224,7 +224,7 @@ public class Service extends Application {
 
     public void executeGetOthersOffers(Long userId) {
         Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s/api/carpool/offers/others/%d", localhost, userId))
+                .url(String.format(Locale.getDefault(), "%s/carpool/offers/others/%d", localhost, userId))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -249,7 +249,7 @@ public class Service extends Application {
 
     public void executeGetOthersRequests(Long userId) {
         Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s/api/carpool/requests/others/%d", localhost, userId))
+                .url(String.format(Locale.getDefault(), "%s/carpool/requests/others/%d", localhost, userId))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -274,7 +274,7 @@ public class Service extends Application {
 
     public void executeGetMyOffers(Long userId) {
         Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s/api/carpool/offers/user/%d", localhost, userId))
+                .url(String.format(Locale.getDefault(), "%s/carpool/offers/user/%d", localhost, userId))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -300,7 +300,7 @@ public class Service extends Application {
 
     public void executeGetMyRequests(Long userId) {
         Request request = new Request.Builder()
-                .url(String.format(Locale.getDefault(), "http://%s/api/carpool/requests/user/%d", localhost, userId))
+                .url(String.format(Locale.getDefault(), "%s/carpool/requests/user/%d", localhost, userId))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
