@@ -28,19 +28,18 @@ public class RequestsViewHolder extends RecyclerView.ViewHolder {
     private final TextView textViewRequestTime1;
     private final TextView textViewRequestTime2;
     private final TextView textViewRequestUser;
-    protected final Button buttonRequestFav;
     protected final Button buttonRequestCall;
     protected final Button buttonRequestWhatsapp;
 
     public RequestsViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
+
         textViewRequestFrom = itemView.findViewById(R.id.textViewRequestFrom);
         textViewRequestTo = itemView.findViewById(R.id.textViewRequestTo);
         textViewRequestDate = itemView.findViewById(R.id.textViewRequestDate);
         textViewRequestTime1 = itemView.findViewById(R.id.textViewRequestTime1);
         textViewRequestTime2 = itemView.findViewById(R.id.textViewRequestTime2);
         textViewRequestUser = itemView.findViewById(R.id.textViewRequestUser);
-        buttonRequestFav = itemView.findViewById(R.id.buttonRequestFav);
         buttonRequestCall = itemView.findViewById(R.id.buttonRequestCall);
         buttonRequestWhatsapp = itemView.findViewById(R.id.buttonRequestWhatsapp);
     }

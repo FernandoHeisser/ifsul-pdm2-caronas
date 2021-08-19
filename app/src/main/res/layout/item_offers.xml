@@ -139,17 +139,6 @@
                 android:padding="8dp">
 
                 <Button
-                    android:id="@+id/buttonOfferFav"
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:text=""
-                    app:icon="@android:drawable/star_off"
-                    app:iconSize="24sp"
-                    tools:ignore="ButtonStyle" />
-
-                <Button
                     android:id="@+id/buttonOfferCall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

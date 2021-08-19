@@ -29,12 +29,12 @@ public class OffersViewHolder extends RecyclerView.ViewHolder {
     private final TextView textViewOfferTime2;
     private final TextView textViewOfferUser;
     private final TextView textViewOfferVacancies;
-    protected final Button buttonOfferFav;
     protected final Button buttonOfferCall;
     protected final Button buttonOfferWhatsapp;
 
     public OffersViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
+
         textViewOfferFrom = itemView.findViewById(R.id.textViewOfferFrom);
         textViewOfferTo = itemView.findViewById(R.id.textViewOfferTo);
         textViewOfferDate = itemView.findViewById(R.id.textViewOfferDate);
@@ -42,7 +42,6 @@ public class OffersViewHolder extends RecyclerView.ViewHolder {
         textViewOfferTime2 = itemView.findViewById(R.id.textViewOfferTime2);
         textViewOfferUser = itemView.findViewById(R.id.textViewOfferUser);
         textViewOfferVacancies = itemView.findViewById(R.id.textViewOfferVacancies);
-        buttonOfferFav = itemView.findViewById(R.id.buttonOfferFav);
         buttonOfferCall = itemView.findViewById(R.id.buttonOfferCall);
         buttonOfferWhatsapp = itemView.findViewById(R.id.buttonOfferWhatsapp);
     }

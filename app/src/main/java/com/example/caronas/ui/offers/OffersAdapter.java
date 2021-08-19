@@ -55,12 +55,9 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
         }
         holder.setOffer(service.othersOffers.get(position), currentUser);
 
-        holder.buttonOfferFav.setOnClickListener(v -> {
-
-        });
         holder.buttonOfferCall.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse("tel:55"+service.othersOffers.get(position).getPhone()));
+            i.setData(Uri.parse("tel:+55"+service.othersOffers.get(position).getPhone()));
             homeActivity.startActivity(i);
         });
         holder.buttonOfferWhatsapp.setOnClickListener(v -> {

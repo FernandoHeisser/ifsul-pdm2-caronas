@@ -55,12 +55,9 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsViewHolder> {
         }
         holder.setRequest(service.othersRideRequests.get(position), currentUser);
 
-        holder.buttonRequestFav.setOnClickListener(v -> {
-
-        });
         holder.buttonRequestCall.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse("tel:55"+service.othersRideRequests.get(position).getPhone()));
+            i.setData(Uri.parse("tel:+55"+service.othersRideRequests.get(position).getPhone()));
             homeActivity.startActivity(i);
         });
         holder.buttonRequestWhatsapp.setOnClickListener(v -> {
