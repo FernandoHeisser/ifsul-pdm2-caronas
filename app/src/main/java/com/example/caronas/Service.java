@@ -54,7 +54,7 @@ public class Service extends Application {
     public List<Offer> myOffers = new ArrayList<>();
     public List<RideRequest> myRideRequests = new ArrayList<>();
 
-    private static final String localhost = "http://192.168.1.3:3333/api";
+    private static final String localhost = "https://ifsul-pdm2-caronas.herokuapp.com/api";
 
     public void createUser(User user) {
         Thread thread = new Thread(() -> {

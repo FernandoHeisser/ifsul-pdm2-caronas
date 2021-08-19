@@ -1,7 +1,10 @@
 package com.example.caronas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -35,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void handleLogin(View view) {
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        boolean mobileConnected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED;
+        boolean wifiConnected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+
+        if (!mobileConnected && !wifiConnected) {
+            Toast.makeText(view.getContext(), "Nenhuma conexão com a internet encontrada.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         boolean userExists = false;
 
         User currentUser = null;
@@ -73,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             Toast.makeText(view.getContext(), "Problema de conexão, tente mais tarde", Toast.LENGTH_LONG).show();
+            return;
         }
 
         if (userExists) {
