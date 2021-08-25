@@ -1,7 +1,9 @@
 package com.example.caronas.ui.offers;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -10,6 +12,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caronas.HomeActivity;
@@ -23,6 +27,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
 
     private final Service service;
     private final HomeActivity homeActivity;
+    private static final int REQUEST_PHONE_CALL = 1;
 
     public OffersAdapter(Context context) {
         HomeActivity homeActivity = (HomeActivity) context;
@@ -56,9 +61,13 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersViewHolder> {
         holder.setOffer(service.othersOffers.get(position), currentUser);
 
         holder.buttonOfferCall.setOnClickListener(v -> {
-            Intent i = new Intent(Intent.ACTION_VIEW);
+            Intent i = new Intent(Intent.ACTION_CALL);
             i.setData(Uri.parse("tel:+55"+service.othersOffers.get(position).getPhone()));
-            homeActivity.startActivity(i);
+            if (ContextCompat.checkSelfPermission(homeActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(homeActivity, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+            } else {
+                homeActivity.startActivity(i);
+            }
         });
         holder.buttonOfferWhatsapp.setOnClickListener(v -> {
             String url = String.format("https://wa.me/55%s?text=Olá, você está oferecendo uma carona?", service.othersOffers.get(position).getPhone());

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -37,13 +39,31 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void handleLogin(View view) {
+    public boolean isAirplaneModeOn() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return Settings.System.getInt(this.getContentResolver(),
+                    Settings.System.AIRPLANE_MODE_ON, 0) != 0;
+        } else {
+            return Settings.Global.getInt(this.getContentResolver(),
+                    Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
+        }
+    }
+
+    public boolean isNetworkConnectionAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         boolean mobileConnected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED;
         boolean wifiConnected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
 
-        if (!mobileConnected && !wifiConnected) {
-            Toast.makeText(view.getContext(), "Nenhuma conexão com a internet encontrada.", Toast.LENGTH_LONG).show();
+        return mobileConnected || wifiConnected;
+    }
+
+    public void handleLogin(View view) {
+        if (isAirplaneModeOn()) {
+            Toast.makeText(view.getContext(), "Modo avião ligado, não conectado a internet", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (!isNetworkConnectionAvailable()) {
+            Toast.makeText(view.getContext(), "Não conectado a internet", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -114,6 +134,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openRegister(View view) {
+        if (isAirplaneModeOn()) {
+            Toast.makeText(view.getContext(), "Modo avião ligado, não conectado a internet", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (!isNetworkConnectionAvailable()) {
+            Toast.makeText(view.getContext(), "Não conectado a internet", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         YoYo.with(Techniques.Flash)
                 .duration(700)
                 .repeat(1)
